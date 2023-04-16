@@ -1,7 +1,10 @@
 package com.example.authorization.user;
 
 
-import com.example.authorization.permission.Permission;
+import com.example.authorization.authorities.Authorities;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class User {
 
@@ -9,12 +12,11 @@ public class User {
 
     private String password;
 
-    private Permission permission;
+    private final List<Authorities> authorities = new ArrayList<>();
 
-    public User(String name, String password, Permission permission) {
+    public User(String name, String password) {
         this.name = name;
         this.password = password;
-        this.permission = permission;
     }
 
     public String getName() {
@@ -33,11 +35,11 @@ public class User {
         this.password = password;
     }
 
-    public Permission getPermission() {
-        return permission;
+    public List<Authorities> getAuthorities() {
+        return authorities;
     }
 
-    public void setPermission(Permission permission) {
-        this.permission = permission;
+    public void setAuthorities(Authorities authorities) {
+        this.authorities.add(authorities);
     }
 }
