@@ -1,9 +1,6 @@
-package com.example.authorization.user;
+package com.example.authorization.model;
 
 
-import com.example.authorization.authorities.Authorities;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class User {
@@ -12,11 +9,12 @@ public class User {
 
     private String password;
 
-    private final List<Authorities> authorities = new ArrayList<>();
+    private final List<Authorities> authorities;
 
-    public User(String name, String password) {
+    public User(String name, String password, List<Authorities> authorities) {
         this.name = name;
         this.password = password;
+        this.authorities = authorities;
     }
 
     public String getName() {

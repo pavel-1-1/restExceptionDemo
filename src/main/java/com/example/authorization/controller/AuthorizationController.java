@@ -1,6 +1,6 @@
 package com.example.authorization.controller;
 
-import com.example.authorization.authorities.Authorities;
+import com.example.authorization.model.Authorities;
 import com.example.authorization.service.AuthorizationService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +19,7 @@ public class AuthorizationController {
         this.service = service;
     }
 
-    @GetMapping("auriz")
+    @GetMapping("authorization")
     public List<Authorities> getAuthorities(@RequestParam("user") String user, @RequestParam("password") String password) {
         return service.getAuthorities(user, password);
     }

@@ -1,29 +1,31 @@
 package com.example.authorization.repository;
 
-import com.example.authorization.authorities.Authorities;
-import com.example.authorization.user.User;
+import com.example.authorization.model.Authorities;
+import com.example.authorization.model.User;
 import org.springframework.stereotype.Repository;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Optional;
 
 @Repository
 public class UserRepository {
-    private final ConcurrentHashMap<Integer, User> users = new ConcurrentHashMap<>();
 
-    public List<Authorities> getUserAuthorities(String user, String password) {
-        // для проверки
-        users.put(1, new User("pavel", "23"));
-        users.get(1).setAuthorities(Authorities.READ);
-        users.get(1).setAuthorities(Authorities.WRITE);
-        users.get(1).setAuthorities(Authorities.DELETE);
+    private final List<User> users;
 
-        for (User user1 : users.values()) {
-            if (Objects.equals(user1.getName(), user) && user1.getPassword().equals(password)) {
-                return user1.getAuthorities();
+    public UserRepository() {
+        users = Arrays.asList(
+                new User("pavel", "23", Arrays.asList(Authorities.WRITE, Authorities.READ)),
+                new User("roma", "34", Arrays.asList(Authorities.DELETE, Authorities.READ)),
+                new User("sasha", "25", List.of(Authorities.READ)));
+    }
+
+    public Optional<List<Authorities>> getUserAuthorities(String user, String password) {
+        for (User user1 : users) {
+            if (user1.getName().equals(user) && user1.getPassword().equals(password)) {
+                return Optional.of(user1.getAuthorities());
             }
         }
-        return null;
+        return Optional.empty();
     }
 }
